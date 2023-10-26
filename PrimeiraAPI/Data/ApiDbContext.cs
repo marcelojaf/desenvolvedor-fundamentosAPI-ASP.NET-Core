@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PrimeiraAPI.Models;
 
 namespace PrimeiraAPI.Data
 {
@@ -8,5 +9,7 @@ namespace PrimeiraAPI.Data
         {
             
         }
+
+        public DbSet<Produto> Produtos { get; set; }
     }
 }
