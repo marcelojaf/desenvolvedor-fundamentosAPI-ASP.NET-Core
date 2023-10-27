@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PrimeiraAPI.Data;
 using PrimeiraAPI.Models;
@@ -6,6 +7,7 @@ using PrimeiraAPI.Models;
 namespace PrimeiraAPI.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/produtos")]
     public class ProdutosController : ControllerBase
     {
@@ -28,6 +30,7 @@ namespace PrimeiraAPI.Controllers
             return await _context.Produtos.ToListAsync();
         }
 
+        [AllowAnonymous]
         [HttpGet("{id:int}")]
         [ProducesResponseType(typeof(Produto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -100,6 +103,7 @@ namespace PrimeiraAPI.Controllers
             return NoContent();
         }
 
+        [Authorize(Roles = "Admin, Gerente")]
         [HttpDelete("{id:int}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
